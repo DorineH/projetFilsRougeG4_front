@@ -1,39 +1,33 @@
-import React, {useEffect, useState } from 'react';
-import axios from 'axios'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './page/HomePage';
+import GamesPage from './page/GamesPage';
+import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
+import { theme } from './components/css/palette';
+import LoginPage from './page/LoginPage';
+import SignupPage from './page/SignupPage';
+import ProfilPage from './page/ProfilPage';
+import { AuthProvider } from './AuthContext';
+import ScorePage from './page/ScorePage';
 
 function App() {
-    const [message, setMessage] = useState('');
-    const [postResponse, setPostResponse] = useState(null);
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/data')
-            .then(response => {
-                setMessage(response.data.message);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the data !', error);
-            });
-    }, []);
-
-const sendData = () => {
-    const data = { content : "Hello from the frontend !!"};
-    axios.post('http://localhost:5000/api/data', data)
-        .then(response => {
-            setPostResponse(response.data.received);
-        })
-        .catch(error => {
-            console.error('There was an error sending the data!', error);
-        });
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.default,  margin: 0, padding: 0, minHeight: '100vh' } }} />
+                    <Routes>
+                        <Route path='/home' element={<HomePage/>} />
+                        <Route path='/games' element={<GamesPage/>} />
+                        <Route path='/login' element={<LoginPage/>} />
+                        <Route path='/signup' element={<SignupPage/>} />
+                        <Route path='/profil' element={<ProfilPage/>} />
+                        <Route path='/score' element={<ScorePage/>} />
+                    </Routes> 
+           
+        </ThemeProvider>
+        
+    );
 };
-
-return (
-    <div className="App">
-        <h1>{message}</h1>
-        <button onClick={sendData}>Send Data</button>
-        {postResponse && <pre>{JSON.stringify(postResponse, null, 2)}</pre>}
-    </div>
-);
-}
 
 export default App;
 
