@@ -3,6 +3,7 @@ import styled from "styled-components";
 import gameContext from "../../gameContext.js";
 import gameService from "../../services/gameService/index.js";
 import socketService from "../../services/socketService/index.js";
+import Chat from "../ChatComponent.js";
 
 
 const GameContainer = styled.div`
@@ -188,37 +189,40 @@ export function Game() {
     }, []);
 
     return (
-        <GameContainer>
-            {!isGameStarted && (
-                <h2>En attente qu'un autre joueur se joigne pour démarrer le jeu !</h2>
-            )}
-            {(!isGameStarted || !isPlayerTurn) && <PlayStopper />}
-            {matrix.map((row, rowIdx) => {
-                return (
-                    <RowContainer key={rowIdx}>
-                        {row.map((column, columnIdx) => (
-                            <Cell
-                                key={columnIdx}
-                                borderRight={columnIdx < 2}
-                                borderLeft={columnIdx > 0}
-                                borderBottom={rowIdx < 2}
-                                borderTop={rowIdx > 0}
-                                onClick={() =>
-                                    updateGameMatrix(columnIdx, rowIdx, playerSymbol)
-                                }
-                            >
-                                {column && column !== "null" ? (
-                                    column === "x" ? (
-                                        <X />
-                                    ) : (
-                                        <O />
-                                    )
-                                ) : null}
-                            </Cell>
-                        ))}
-                    </RowContainer>
-                );
-            })}
-        </GameContainer>
+        <>
+            <GameContainer>
+                {!isGameStarted && (
+                    <h2>En attente qu'un autre joueur se joigne pour démarrer le jeu !</h2>
+                )}
+                {(!isGameStarted || !isPlayerTurn) && <PlayStopper />}
+                {matrix.map((row, rowIdx) => {
+                    return (
+                        <RowContainer key={rowIdx}>
+                            {row.map((column, columnIdx) => (
+                                <Cell
+                                    key={columnIdx}
+                                    borderRight={columnIdx < 2}
+                                    borderLeft={columnIdx > 0}
+                                    borderBottom={rowIdx < 2}
+                                    borderTop={rowIdx > 0}
+                                    onClick={() =>
+                                        updateGameMatrix(columnIdx, rowIdx, playerSymbol)
+                                    }
+                                >
+                                    {column && column !== "null" ? (
+                                        column === "x" ? (
+                                            <X />
+                                        ) : (
+                                            <O />
+                                        )
+                                    ) : null}
+                                </Cell>
+                            ))}
+                        </RowContainer>
+                    );
+                })}
+            </GameContainer>
+            <Chat />
+        </>
     );
 }

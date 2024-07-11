@@ -10,6 +10,8 @@ import ProfilPage from './page/ProfilPage';
 import { AuthProvider } from './AuthContext';
 import ScorePage from './page/ScorePage';
 import GameComponent from './components/GameComponent';
+import Chat from './components/ChatComponent';
+
 
 function App() {
     return (
@@ -24,6 +26,7 @@ function App() {
                 <Route path='/profil' element={<ProfilPage />} />
                 <Route path='/score' element={<ScorePage />} />
                 <Route path='/game' element={<GameComponent />} />
+                <Route path='/chat' element={<Chat />} />
             </Routes>
 
         </ThemeProvider>
