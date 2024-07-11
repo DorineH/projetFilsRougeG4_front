@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
             console.log("iciii")
             console.log(pseudo);
             console.log(password);
-            const response = await axios.post('http://127.0.0.1:5000/api/v1.0/login', { pseudo, password });
+            const response = await axios.post('http://127.0.0.1:5000/api/v1.0/test', { pseudo, password });
             if (response.status === 200) {
                 console.log("logiiin success")
                 setIsAuthentificated(true);

@@ -10,12 +10,12 @@ export const theme = createTheme({
       }
     },
     background: {
-        default: '#212121',
+        default: 'white',
         profil: '#f3e5f5'
     },
     typography: {
         title: {
             // fontSize: 50,
-            color: '#7e57c2'}
+            color: 'black'}
     }
 });
