@@ -5,7 +5,6 @@ import gameService from "../../services/gameService/index.js";
 import socketService from "../../services/socketService/index.js";
 import Chat from "../ChatComponent.js";
 
-
 const GameContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -164,19 +163,25 @@ export function Game() {
     };
 
     const handleGameStart = () => {
-        if (socketService.socket)
+        if (socketService.socket) {
+            console.log("Game Started: Socket connected");
             gameService.onStartGame(socketService.socket, (options) => {
-                setGameStarted(true);
+                console.log("Game Started with options:", options);
+                setGameStarted(true); // Schedule state update
                 setPlayerSymbol(options.symbol);
                 if (options.start) setPlayerTurn(true);
-                else setPlayerTurn(false);
+                else setPlayerTurn(false)
+                setGameStarted(false);
             });
+        } else {
+            console.log("Socket not connected");
+        }
     };
 
     const handleGameWin = () => {
         if (socketService.socket)
             gameService.onGameWin(socketService.socket, (message) => {
-                console.log("Here", message);
+                console.log("Game Win:", message);
                 setPlayerTurn(false);
                 alert(message);
             });
@@ -187,6 +192,10 @@ export function Game() {
         handleGameStart();
         handleGameWin();
     }, []);
+
+    useEffect(() => {
+        console.log("Game started state changed:", isGameStarted);
+    }, [isGameStarted]);
 
     return (
         <>
