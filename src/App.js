@@ -9,23 +9,25 @@ import SignupPage from './page/SignupPage';
 import ProfilPage from './page/ProfilPage';
 import { AuthProvider } from './AuthContext';
 import ScorePage from './page/ScorePage';
+import Chat from './components/ChatComponent';
 
 function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.default,  margin: 0, padding: 0, minHeight: '100vh' } }} />
-                    <Routes>
-                        <Route path='/home' element={<HomePage/>} />
-                        <Route path='/games' element={<GamesPage/>} />
-                        <Route path='/login' element={<LoginPage/>} />
-                        <Route path='/signup' element={<SignupPage/>} />
-                        <Route path='/profil' element={<ProfilPage/>} />
-                        <Route path='/score' element={<ScorePage/>} />
-                    </Routes> 
-           
+            <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.default, margin: 0, padding: 0, minHeight: '100vh' } }} />
+            <Routes>
+                <Route path='/home' element={<HomePage />} />
+                <Route path='/games' element={<GamesPage />} />
+                <Route path='/login' element={<LoginPage />} />
+                <Route path='/signup' element={<SignupPage />} />
+                <Route path='/profil' element={<ProfilPage />} />
+                <Route path='/score' element={<ScorePage />} />
+                <Route path='/chat' element={<Chat />} />
+            </Routes>
+
         </ThemeProvider>
-        
+
     );
 };
 
