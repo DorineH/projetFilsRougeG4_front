@@ -9,9 +9,9 @@ import pac_man_vignette from '../assets/images/pac_man_vignette.png';
 import quiz_vignette from '../assets/images/quiz_vignette.jpg'
 import arcade_vignette from '../assets/images/arcade_vignette.jpg'
 import arcade2_vignette from '../assets/images/arcade2_vignette.jpg'
-import { Grid, IconButton, ImageListItemBar, Modal, useTheme } from '@mui/material';
-import SnakeGamePopup from '../popup/SnakeGamePopup';
+import { Grid, ImageListItemBar, useTheme } from '@mui/material';
 import { useAuth } from '../AuthContext';
+import GamePopup from '../popup/GamePopup';
 
 export default function StandardImageList() {
   const theme = useTheme();
@@ -59,7 +59,7 @@ export default function StandardImageList() {
             <ImageListItemBar
                 title={item.title}
                 actionIcon={
-                  <SnakeGamePopup 
+                  <GamePopup 
                     game={item} 
                     open={selectedGame === item} 
                     onOpen={() => handleOpenPopup(item)}

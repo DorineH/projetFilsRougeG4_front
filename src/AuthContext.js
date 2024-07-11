@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,28 +8,32 @@ export const AuthProvider = ({ children }) => {
     const [isAuthentificated, setIsAuthentificated] = useState(false);
     const [isRegister, setIsRegister] = useState(false);
     const [user, setUser] = useState(null);
-    console.log(user);  
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            setIsAuthentificated(true);
+        }
+    }, []);
 
     // Connexion
     const login = async (pseudo, password) => {
         try {
-            console.log("iciii")
-            console.log(pseudo);
-            console.log(password);
+            console.log("iciii");
             const response = await axios.post('http://127.0.0.1:5000/api/v1.0/login', { pseudo, password });
             if (response.status === 200) {
-                console.log("logiiin success")
+                console.log("logiiin success");
                 setIsAuthentificated(true);
                 setUser(response.data.user);
-                console.log(response.data.user);
-                
+                localStorage.setItem('user', JSON.stringify(response.data.user));
                 navigate('/home');
             }
         } catch(error) {
             console.error("Login failed", error);
-            setIsAuthentificated(false)
+            setIsAuthentificated(false);
             if (error.response.status === 401) {
                 // Gérer l'erreur 401 ici, par exemple :
                 alert("User name or password is incorrect !");
@@ -48,6 +52,7 @@ export const AuthProvider = ({ children }) => {
                 console.log("logout success");
                 setIsAuthentificated(false);
                 setUser(null);
+                localStorage.removeItem('user');
                 navigate('/logout');
             }
         } catch(error) {
@@ -61,7 +66,6 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/v1.0/signup', {prenom, nom, pseudo, password});
             if (response.status === 200) {
-                console.log("signup success");
                 alert("Vous êtes bien inscrit, vous pouvez maintenant vous connecter !")
                 setIsRegister(true);
                 navigate('/login')
@@ -78,7 +82,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axios.get('http://127.0.0.1:5000/api/v1.0/launchSnake');
             if (response.status === 200) {
-                alert(response.data.message);
+                // alert(response.data.message);
             }
         } catch (error) {
             console.error("Failed to launch snake game !", error);
@@ -87,12 +91,18 @@ export const AuthProvider = ({ children }) => {
     }
 
     // Score du jeu Snake 
-    const  scoreSnakeGame = async () => {
+    const  scoreSnakeGame = async (pseudo) => {
         try {
-            const response = await axios.get('hhtp://127.0.0.1:5000/api/v1.0/score', {pseudo, score});
-            if (response.status === 200) {
-                alert(response.data.message);
-            }
+            const response = await axios.get('http://127.0.0.1:5000/api/v1.0/scores?pseudo=' + pseudo, {pseudo});
+            console.log(pseudo);
+            console.log(score);
+
+            // if (response.status === 200) {
+            //     console.log('dddddddddddddddddd')
+            //     alert(response.data.message);
+            return response.data.scores
+
+            // }
         } catch (error) {
             console.error("Failed to save the score !", error);
             alert("Failed to save the score !");
@@ -100,7 +110,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthentificated, isRegister, user, signup, login, logout, launchSnakegame }}>
+        <AuthContext.Provider value={{ isAuthentificated, isRegister, user, signup, login, logout, launchSnakegame, scoreSnakeGame }}>
             {children}
         </AuthContext.Provider>
     );

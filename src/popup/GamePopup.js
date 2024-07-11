@@ -8,18 +8,24 @@ import { useAuth } from "../AuthContext";
 // import styles from "./css/aboutme.module.css";
 // import Image from 'next/image';
 
-function SnakeGamePopup({ game, open, onOpen, onClose, onLaunch }) {
+function GamePopup({ game, open, onOpen, onClose, onLaunch }) {
     const theme = useTheme();
-    console.log(game);
-    console.log(game.title);
+    const { user, scoreSnakeGame} = useAuth();
 
     const handleLaunch = async () => {
       try {
-        console.log(game);
-        await onLaunch();
+        const score = await onLaunch();
+        console.log('score1111 ', score);
+        
+        if (user) {
+          await scoreSnakeGame(user.pseudo,  score);
+          alert('Votre score est ', score, ' !');
+        } else {
+          alert("Utilisateur non trouvé !");
+        }
   
       } catch(error) {
-        console.log(game);
+        console.log("Erreur au lancement du jeu");
         alert("Erreur au lancement du jeu", game.title);
       }
     }
@@ -48,4 +54,4 @@ function SnakeGamePopup({ game, open, onOpen, onClose, onLaunch }) {
     );
 };
 
-export default SnakeGamePopup;
+export default GamePopup;

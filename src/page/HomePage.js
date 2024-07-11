@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ButtonAppBar from "../components/ButtonAppBar";
 import { Box, FormControlLabel, Grid, Paper, Switch, Typography, useTheme, Zoom } from "@mui/material";
+import { useAuth } from "../AuthContext";
 // import styles from "./css/aboutme.module.css";
 // import Image from 'next/image';
 
@@ -22,12 +23,7 @@ const icon = (
 
 function HomePage() {
     const theme = useTheme();
-    const { user } = useState(null);
-    const [checked, setChecked] = React.useState(false);
-
-    const handleChange = () => {
-      setChecked((prev) => !prev);
-    };
+    const { user } = useAuth();
 
     return (
         <Grid sx={{backgroundColor: theme.background.default, minHeight: '100vh'}}> 
@@ -37,9 +33,13 @@ function HomePage() {
                 <Typography variant='h5' align='center' sx={{color: theme.typography.title}}>Explorez et jouez à une variété de jeux passionnants ! </Typography>
                 <Typography variant='h6' align='center' sx={{color: theme.typography.title}}> Comment jouer :</Typography>
 
-
-                {/* <Typography>{user ? user.prenom : 'prénom'}</Typography>
-                <Typography>{user ? user.pseudo : 'pseudo'}</Typography> */}
+                { user && (
+                  <Grid>
+                    <Typography>{user ? user.prenom : 'prénom'}</Typography>
+                    <Typography>{user ? user.nom : 'nom'}</Typography>
+                    <Typography align='center' sx={{ color: theme.typography.title }}>Bienvenue {user ? user.pseudo : 'pseudo'} !</Typography>    
+                  </Grid>
+                )}
             </Grid>
         </Grid>
     
