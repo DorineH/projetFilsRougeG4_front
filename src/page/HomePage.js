@@ -1,55 +1,71 @@
 import React, { useState } from "react";
 import ButtonAppBar from "../components/ButtonAppBar";
-import { Box, FormControlLabel, Grid, Paper, Switch, Typography, useTheme, Zoom } from "@mui/material";
-import { useAuth } from "../AuthContext";
+import { Box, FormControlLabel, Grid, Paper, Switch, Typography, useTheme, Zoom, Card, CardMedia, CardActionArea, CardContent } from "@mui/material";
 // import styles from "./css/aboutme.module.css";
 // import Image from 'next/image';
 
+
 const icon = (
-    <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
-      <svg>
-        <Box
-          component="polygon"
-          points="0,100 50,00, 100,100"
-          sx={{
-            fill: '#7e57c2', // (theme) => theme.palette.common.white,
-            stroke: '#f3e5f5', // (theme) => theme.palette.divider,
-            strokeWidth: 1,
-          }}
-        />
-      </svg>
-    </Paper>
-  );
+  <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
+    <svg>
+      <Box
+        component="polygon"
+        points="0,100 50,00, 100,100"
+        sx={{
+          fill: '#7e57c2', // (theme) => theme.palette.common.white,
+          stroke: '#f3e5f5', // (theme) => theme.palette.divider,
+          strokeWidth: 1,
+        }}
+      />
+    </svg>
+  </Paper>
+);
 
 function HomePage() {
-    const theme = useTheme();
-    const { user } = useAuth();
+  const theme = useTheme();
+  const { user } = useState(null);
+  const [checked, setChecked] = React.useState(false);
 
-    return (
-        <Grid sx={{backgroundColor: theme.background.default, minHeight: '100vh'}}> 
-            <ButtonAppBar/>
-            <Grid>
-                <Typography variant="h4" align="center" sx={{color: theme.typography.title}}>Bienvenue sur notre plateforme de jeux !</Typography>
-                <Typography variant='h5' align='center' sx={{color: theme.typography.title}}>Explorez et jouez à une variété de jeux passionnants ! </Typography>
-                <Typography variant='h6' align='center' sx={{color: theme.typography.title}}> Comment jouer :</Typography>
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
 
-                { user && (
-                  <Grid>
-                    <Typography>{user ? user.prenom : 'prénom'}</Typography>
-                    <Typography>{user ? user.nom : 'nom'}</Typography>
-                    <Typography align='center' sx={{ color: theme.typography.title }}>Bienvenue {user ? user.pseudo : 'pseudo'} !</Typography>    
-                  </Grid>
-                )}
-            </Grid>
-        </Grid>
-    
-    );
+  return (
+    <Grid sx={{ backgroundColor: theme.background.default, minHeight: '100vh' }}>
+      <ButtonAppBar />
+      <Grid>
+        <Typography variant="h4" align="center" sx={{ color: theme.typography.title }}>Bienvenue sur notre plateforme de jeux !</Typography>
+        <Typography variant='h5' align='center' sx={{ color: theme.typography.title }}>Explorez et jouez à une variété de jeux passionnants ! </Typography>
+        <Typography variant='h6' align='center' sx={{ color: theme.typography.title }}> Comment jouer :</Typography>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardActionArea href="/game">
+            <CardMedia
+              component="img"
+              height="140"
+              image="https://img.freepik.com/photos-premium/mise-au-point-selective-jeu-des-bois-tic-tac_106233-375.jpg?ga=GA1.1.1012433379.1717797129&semt=ais_user"
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Morpion
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Jouez dès maintenant au jeu du morpion en ligne avec vos amis !
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+        {/* <Typography>{user ? user.prenom : 'prénom'}</Typography>
+            <Typography>{user ? user.pseudo : 'pseudo'}</Typography> */}
+      </Grid>
+    </Grid>
+  );
 };
 
 export default HomePage;
 
-// (H1) Bienvenue sur notre plateforme de jeux ! 
-// (H2) Explorez et jouez à une variété de jeux passionnants ! 
+// (H1) Bienvenue sur notre plateforme de jeux !
+// (H2) Explorez et jouez à une variété de jeux passionnants !
 
 // (normal) Nous sommes ravis de vous accueillir sur notre plateforme de jeux en ligne. Que vous soyez fan de jeux classiques comme le Snake et le Pac-Man, ou que vous préfériez les défis de stratégie comme le Tic Tac Toe et Puissance 4, nous avons quelque chose pour tout le monde.
 
