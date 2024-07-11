@@ -92,6 +92,18 @@ const Chat = () => {
                         ))}
                     <div ref={messagesEndRef} />
                 </div>
+                {!isUsernameSet && (
+                    <div className="username-box">
+                        <input
+                            placeholder="Entrer votre pseudo"
+                            value={username}
+                            name="username"
+                            onChange={e => onChangeUsername(e)}
+                            className="username-input"
+                        />
+                        <button className="pseudo" onClick={onSetUsername}>Ajoutez un pseudo</button>
+                    </div>
+                )}
                 <input
                     value={message}
                     name="message"
@@ -103,20 +115,10 @@ const Chat = () => {
                     onClick={() => onClick()}
                     disabled={!isUsernameSet}
                 >
-                    Envoyez
+                    Envoyez un message
                 </button>
             </div>
-            {!isUsernameSet && (
-                <div className="username-box">
-                    <input
-                        placeholder="Entrer votre pseudo"
-                        value={username}
-                        name="username"
-                        onChange={e => onChangeUsername(e)}
-                    />
-                    <button onClick={onSetUsername}>Ajoutez un pseudo pour parler</button>
-                </div>
-            )}
+
         </div>
     );
 };

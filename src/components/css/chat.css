@@ -39,9 +39,16 @@
   background-color: #f1f1f1;
 }
 
+.pseudo {
+  font-weight: bold;
+  margin-left: 10px;
+  padding-left: 10%;
+  width: 50%;
+}
+
 .username-box {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   width: 100%;
   margin-top: 20px;
@@ -70,4 +77,10 @@
 .username-box button:hover,
 .chat-box button:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 1400px) {
+  .chat-container {
+    display: none;
+  }
 }

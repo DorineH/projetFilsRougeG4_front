@@ -5,6 +5,7 @@ import socketService from "../services/socketService";
 import { JoinRoom } from "../components/joinRoom";
 import GameContext, { IGameContextProps } from "../gameContext";
 import { Game } from "../components/game";
+import ButtonAppBar from "../components/ButtonAppBar";
 
 const GameContainer = styled.div`
   width: 100%;
@@ -59,15 +60,18 @@ function GameComponent() {
     };
 
     return (
-        <GameContext.Provider value={gameContextValue}>
-            <GameContainer>
-                <WelcomeText>A vous de jouez !</WelcomeText>
-                <MainContainer>
-                    {!isInRoom && <JoinRoom />}
-                    {isInRoom && <Game />}
-                </MainContainer>
-            </GameContainer>
-        </GameContext.Provider>
+        <>
+            <ButtonAppBar />
+            <GameContext.Provider value={gameContextValue}>
+                <GameContainer>
+                    <WelcomeText>A vous de jouez !</WelcomeText>
+                    <MainContainer>
+                        {!isInRoom && <JoinRoom />}
+                        {isInRoom && <Game />}
+                    </MainContainer>
+                </GameContainer>
+            </GameContext.Provider>
+        </>
     );
 }
 

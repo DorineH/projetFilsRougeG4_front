@@ -4,6 +4,7 @@ import gameContext from "../../gameContext.js";
 import gameService from "../../services/gameService/index.js";
 import socketService from "../../services/socketService/index.js";
 import Chat from "../ChatComponent.js";
+import { Box, Container } from "@mui/material";
 
 const GameContainer = styled.div`
   display: flex;
@@ -197,40 +198,47 @@ export function Game() {
     }, [isGameStarted]);
 
     return (
-        <>
-            <GameContainer>
-                {!isGameStarted && (
-                    <h2>En attente qu'un autre joueur se joigne pour démarrer le jeu !</h2>
-                )}
-                {(!isGameStarted || !isPlayerTurn) && <PlayStopper />}
-                {matrix.map((row, rowIdx) => {
-                    return (
-                        <RowContainer key={rowIdx}>
-                            {row.map((column, columnIdx) => (
-                                <Cell
-                                    key={columnIdx}
-                                    borderRight={columnIdx < 2}
-                                    borderLeft={columnIdx > 0}
-                                    borderBottom={rowIdx < 2}
-                                    borderTop={rowIdx > 0}
-                                    onClick={() =>
-                                        updateGameMatrix(columnIdx, rowIdx, playerSymbol)
-                                    }
-                                >
-                                    {column && column !== "null" ? (
-                                        column === "x" ? (
-                                            <X />
-                                        ) : (
-                                            <O />
-                                        )
-                                    ) : null}
-                                </Cell>
-                            ))}
-                        </RowContainer>
-                    );
-                })}
-            </GameContainer>
-            <Chat />
-        </>
+        <Container maxWidth="xl">
+            <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="center"
+            >
+                <GameContainer>
+                    {!isGameStarted && (
+                        <h2>En attente qu'un autre joueur se joigne pour démarrer le jeu !</h2>
+                    )}
+                    {(!isGameStarted || !isPlayerTurn) && <PlayStopper />}
+                    {matrix.map((row, rowIdx) => {
+                        return (
+                            <RowContainer key={rowIdx}>
+                                {row.map((column, columnIdx) => (
+                                    <Cell
+                                        key={columnIdx}
+                                        borderRight={columnIdx < 2}
+                                        borderLeft={columnIdx > 0}
+                                        borderBottom={rowIdx < 2}
+                                        borderTop={rowIdx > 0}
+                                        onClick={() =>
+                                            updateGameMatrix(columnIdx, rowIdx, playerSymbol)
+                                        }
+                                    >
+                                        {column && column !== "null" ? (
+                                            column === "x" ? (
+                                                <X />
+                                            ) : (
+                                                <O />
+                                            )
+                                        ) : null}
+                                    </Cell>
+                                ))}
+                            </RowContainer>
+                        );
+                    })}
+                </GameContainer>
+                <Chat />
+            </Box>
+        </Container>
     );
 }
