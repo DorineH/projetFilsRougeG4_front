@@ -171,7 +171,6 @@ export function Game() {
                 setPlayerSymbol(options.symbol);
                 if (options.start) setPlayerTurn(true);
                 else setPlayerTurn(false)
-
             });
         } else {
             console.log("Socket not connected");
