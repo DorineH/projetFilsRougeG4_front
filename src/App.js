@@ -9,6 +9,7 @@ import SignupPage from './page/SignupPage';
 import ProfilPage from './page/ProfilPage';
 import { AuthProvider } from './AuthContext';
 import ScorePage from './page/ScorePage';
+import Test from './HomeTest';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                         <Route path='/signup' element={<SignupPage/>} />
                         <Route path='/profil' element={<ProfilPage/>} />
                         <Route path='/score' element={<ScorePage/>} />
+                        <Route path='/test' element={<Test/>} />
                     </Routes> 
            
         </ThemeProvider>
