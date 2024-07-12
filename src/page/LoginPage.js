@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import bgImage from './backgroundLoginPage.avif';
 
 function LoginPage () {
     // const theme = useTheme();
@@ -30,14 +30,14 @@ function LoginPage () {
         }
     };
 
-    const goToSignupPage = async () => {
-        try {
-            navigate('/signup')
-        } catch (error) {
-            setError("You can't acced to the signup page");
-            console.error("Go to signup page failed", error);
-        }
-    }
+    // const goToSignupPage = async () => {
+    //     try {
+    //         navigate('/signup')
+    //     } catch (error) {
+    //         setError("You can't acced to the signup page");
+    //         console.error("Go to signup page failed", error);
+    //     }
+    // }
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -47,16 +47,17 @@ function LoginPage () {
 
     return(
         // <ImageBackground  className="background">
-        <Grid container alignItems="center" style={{ height: '100vh' }}>
+        <Grid container component="main" sx={{ height: '100vh' }}>
             <Grid 
                 item 
                 xs={false} 
                 sm={4}
                 md={7}
                 sx={{
-                    // backgroundImage:
-                    // 'url("projetFilsRougeG4_front/src/assets/images/backgroundLoginPage.avif")',
-                    backgroundColor: 'red',
+                    backgroundImage:
+                    `url(${bgImage})`, 
+                    backgroundColor: (t) =>
+                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                     backgroundSize: 'cover',
                     backgroundPosition: 'left',
                 }} 
@@ -88,7 +89,7 @@ function LoginPage () {
                     autoFocus
                     onChange={(e) => setUserPseudo(e.target.value)}
                 />
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                <FormControl fullWidth variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
@@ -109,16 +110,16 @@ function LoginPage () {
                             onChange={(e) => setPassword(e.target.value)}
                     />
                 </FormControl> 
-                {/* <FormControlLabel
+                <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
-                /> */}
+                />
                 <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleSubmit}>
                     Sign In
                 </Button>
-                <Button variant="contained" onClick={goToSignupPage}>
+                {/* <Button variant="contained" onClick={goToSignupPage}>
                     Signup
-                </Button>
+                </Button> */}
                 <Grid container>
                     <Grid item xs>
                         <Link href="#" variant="body2">

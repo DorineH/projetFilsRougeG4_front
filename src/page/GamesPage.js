@@ -11,7 +11,7 @@ function GamesPage() {
     return (
         <Grid sx={{backgroundColor: theme.background.default, minHeight: '100vh'}}> 
             <ButtonAppBar/>
-            <Typography variant="h3" align="center" sx={{color: theme.typography.title}}>Welcome to the Games!</Typography>
+            <Typography variant="h3" align="center" sx={{color: theme.typography.title}}>Welcome to the Games !</Typography>
             <StandardImageList/>
         </Grid>
     );

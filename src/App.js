@@ -11,6 +11,7 @@ import { AuthProvider } from './AuthContext';
 import ScorePage from './page/ScorePage';
 import GameComponent from './components/GameComponent';
 import Chat from './components/ChatComponent';
+import ProfilPageV2 from './page/ProfilPageV2';
 
 
 function App() {
@@ -21,9 +22,9 @@ function App() {
             <Routes>
                 <Route path='/home' element={<HomePage />} />
                 <Route path='/games' element={<GamesPage />} />
-                <Route path='/login' element={<LoginPage />} />
+                <Route path='/' element={<LoginPage />} />
                 <Route path='/signup' element={<SignupPage />} />
-                <Route path='/profil' element={<ProfilPage />} />
+                <Route path='/profil' element={<ProfilPageV2 />} />
                 <Route path='/score' element={<ScorePage />} />
                 <Route path='/game' element={<GameComponent />} />
                 <Route path='/chat' element={<Chat />} />

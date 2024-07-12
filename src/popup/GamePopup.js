@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonAppBar from "../components/ButtonAppBar";
 import StandardImageList from "../components/StandardGamesList";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Paper, Typography, useTheme } from "@mui/material";
@@ -10,19 +10,20 @@ import { useAuth } from "../AuthContext";
 
 function GamePopup({ game, open, onOpen, onClose, onLaunch }) {
     const theme = useTheme();
-    const { user, scoreSnakeGame} = useAuth();
+    // const { user, scoreSnakeGame} = useAuth();
+  
 
     const handleLaunch = async () => {
       try {
-        const score = await onLaunch();
-        console.log('score1111 ', score);
+        console.log('rrrrrrrrrrrrrrrrrrr');
+        await onLaunch();
         
-        if (user) {
-          await scoreSnakeGame(user.pseudo,  score);
-          alert('Votre score est ', score, ' !');
-        } else {
-          alert("Utilisateur non trouvé !");
-        }
+        // if (user) {
+        //   await scoreSnakeGame(user.pseudo,  scores);
+        //   alert('Votre score est ', scores, ' !');
+        // } else {
+        //   alert("Utilisateur non trouvé !");
+        // }
   
       } catch(error) {
         console.log("Erreur au lancement du jeu");
@@ -31,22 +32,22 @@ function GamePopup({ game, open, onOpen, onClose, onLaunch }) {
     }
 
     return (
-        <Grid > 
+        <Grid> 
          <IconButton
-            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+            sx={{ color: '#8fbc8b' }}
             onClick={onOpen}
           >
             <PlayArrowIcon />
           </IconButton>
-          <Dialog open={open} onClose={onClose}>
+          <Dialog open={open} onClose={onClose} >
             <DialogTitle>Let's play to the {game.title}</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                You can click on play to launch the game ! 
+                Vous pouvez mainteant commencer à jouer ! 
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>I won't play</Button>
+              <Button onClick={onClose}>Annuler</Button>
               <Button onClick={handleLaunch}>Play</Button>
             </DialogActions>
           </Dialog>

@@ -93,16 +93,22 @@ export const AuthProvider = ({ children }) => {
     // Score du jeu Snake 
     const  scoreSnakeGame = async (pseudo) => {
         try {
-            const response = await axios.get('http://127.0.0.1:5000/api/v1.0/scores?pseudo=' + pseudo, {pseudo});
-            console.log(pseudo);
-            console.log(score);
+            const response = await axios.get('http://127.0.0.1:5000/api/v1.0/scores', { params: {pseudo} });
+            if (response.status === 200) {
+                // alert("Vous êtes bien inscrit, vous pouvez maintenant vous connecter !")
+          
+            }
+        } catch (error) {
+            console.error("Failed to save the score !", error);
+            alert("Failed to save the score !");
+        }
+    }
 
-            // if (response.status === 200) {
-            //     console.log('dddddddddddddddddd')
-            //     alert(response.data.message);
-            return response.data.scores
+    const saveScore = async (pseudo) => {
+        try {
+            const response = await axios.post('http://127.0.0.1:5000/api/v1.0/score', {pseudo, score, date});
+            return response.data;
 
-            // }
         } catch (error) {
             console.error("Failed to save the score !", error);
             alert("Failed to save the score !");
@@ -110,7 +116,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthentificated, isRegister, user, signup, login, logout, launchSnakegame, scoreSnakeGame }}>
+        <AuthContext.Provider value={{ isAuthentificated, isRegister, user, signup, login, logout, launchSnakegame, scoreSnakeGame, saveScore }}>
             {children}
         </AuthContext.Provider>
     );

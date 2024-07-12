@@ -9,34 +9,41 @@ import pac_man_vignette from '../assets/images/pac_man_vignette.png';
 import quiz_vignette from '../assets/images/quiz_vignette.jpg'
 import arcade_vignette from '../assets/images/arcade_vignette.jpg'
 import arcade2_vignette from '../assets/images/arcade2_vignette.jpg'
-import { Grid, ImageListItemBar, useTheme } from '@mui/material';
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, ImageListItemBar, Typography, useTheme } from '@mui/material';
 import { useAuth } from '../AuthContext';
 import GamePopup from '../popup/GamePopup';
+import GameComponent from './GameComponent';
 
 export default function StandardImageList() {
   const theme = useTheme();
   const [selectedGame, setSelectedGame] = React.useState(null);
-  const { launchSnakegame } = useAuth();
+  const [open, setOpen] = React.useState(false);
+  const { user, launchSnakegame, saveScore  } = useAuth();
+  const [gameScore, setGameScore] = React.useState(0);
+  const [gameOver, setGameOver] = React.useState(false);
 
   const handleOpenPopup = (game) => {
     setSelectedGame(game);
+    setOpen(true);
   };
 
   const handleClosePopup = () => {
-    setSelectedGame(null);
+    setOpen(false);
   };
+
+  const handleLaunchMorpionGame = () => {
+    setOpen(true);
+  }
 
   const launchGame = async (game) => {
     try {
       switch (game.title) {
         case 'Snake Game':
           await launchSnakegame();
-          handleClosePopup;
         break;
         case 'Tic Tac Toe':
-          // mettre le lancement du jeu du tic tac toe
+          handleLaunchMorpionGame();
         break;
-
         default:
           alert('The ' + game.title + ' game is in construction')
       }
@@ -44,31 +51,69 @@ export default function StandardImageList() {
       alert("Erreur au lancement du jeu")
     }
   }
+
+  
+  React.useEffect(() => {
+    if (gameOver && user) {
+      saveScore(user.pseudo, gameScore)
+        .then( response => {
+        console.log('Score saved:', response); 
+        })
+        .catch(error => {
+          console.error('Error saving score:', error);
+        });
+    }
+  }, [gameOver, gameScore, user, saveScore]);
+
+  const endGame = () => {
+    setGameScore(100);
+    setGameOver(true);
+  }
   
   return ( 
     <Grid style={{ display: 'flex', justifyContent: 'center', backgroundColor: theme.background.default }}>
-        <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+        <ImageList sx={{ maxWidth: 550 }} cols={3} rowHeight={164}>
         {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-            <img
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                alt={item.title}
-                loading="lazy"
-            />
-            <ImageListItemBar
+          <Card sx={{ maxWidth: 345 }} key={item.img}>
+              <CardMedia
+                component="img"
+                sx={{ height: 140 }}
+                image={item.img}                
                 title={item.title}
-                actionIcon={
-                  <GamePopup 
-                    game={item} 
-                    open={selectedGame === item} 
-                    onOpen={() => handleOpenPopup(item)}
-                    onClose={handleClosePopup} 
-                    onLaunch={() => launchGame(item)}
-                  />
-                }
-            />
-            </ImageListItem>
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {item.title}
+                </Typography>
+              </CardContent>
+              <GamePopup 
+                game={item} 
+                open={selectedGame === item} 
+                onOpen={() => handleOpenPopup(item)}
+                onClose={() => handleClosePopup(item)} 
+                onLaunch={() => launchGame(item)}
+                />
+          </Card>
+            // <ImageListItem key={item.img}>
+            // <img
+            //     srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            //     src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+            //     alt={item.title}
+            //     loading="lazy"
+            // />
+            // <ImageListItemBar
+            //     title={item.title}
+            //     actionIcon={
+                  // <GamePopup 
+                  //   game={item} 
+                  //   open={selectedGame === item} 
+                  //   onOpen={() => handleOpenPopup(item)}
+                  //   onClose={handleClosePopup} 
+                  //   onLaunch={() => launchGame(item)}
+                  // />
+            //     }
+            // />
+            // </ImageListItem>
           ))}
         </ImageList>
     </Grid>

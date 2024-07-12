@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ButtonAppBar from "../components/ButtonAppBar";
-import { Box, FormControlLabel, Grid, Paper, Switch, Typography, useTheme, Zoom, Card, CardMedia, CardActionArea, CardContent } from "@mui/material";
+import { Box, Grid, Paper, Switch, Typography, useTheme, Zoom, Card, CardMedia, CardActionArea, CardContent } from "@mui/material";
+import StandardImageList from "../components/StandardGamesList";
 // import styles from "./css/aboutme.module.css";
 // import Image from 'next/image';
 
@@ -36,8 +37,7 @@ function HomePage() {
       <Grid>
         <Typography variant="h4" align="center" sx={{ color: theme.typography.title }}>Bienvenue sur notre plateforme de jeux !</Typography>
         <Typography variant='h5' align='center' sx={{ color: theme.typography.title }}>Explorez et jouez à une variété de jeux passionnants ! </Typography>
-        <Typography variant='h6' align='center' sx={{ color: theme.typography.title }}> Comment jouer :</Typography>
-        <Card sx={{ maxWidth: 345 }}>
+        {/* <Card sx={{ maxWidth: 345 }}>
           <CardActionArea href="/game">
             <CardMedia
               component="img"
@@ -54,7 +54,8 @@ function HomePage() {
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>
+        </Card> */}
+        <StandardImageList />
         {/* <Typography>{user ? user.prenom : 'prénom'}</Typography>
             <Typography>{user ? user.pseudo : 'pseudo'}</Typography> */}
       </Grid>

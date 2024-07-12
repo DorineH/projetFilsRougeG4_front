@@ -16,6 +16,6 @@ export const theme = createTheme({
     typography: {
         title: {
             // fontSize: 50,
-            color: '#7e57c2'}
+            color: '#8fbc8b'}
     }
 });
